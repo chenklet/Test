@@ -12,14 +12,14 @@ import java.security.cert.CertificateFactory;
 public class CertificateUtils {
 	public static byte[] readCertificates() throws Exception {
 		CertificateFactory factory = CertificateFactory.getInstance("X.509");
-		InputStream in = new FileInputStream("C:/Users/WQH/https.keystore");
+		InputStream in = new FileInputStream("C:/Users/WQH/https.crt");
 		Certificate cer = factory.generateCertificate(in);
 		return cer.getEncoded();
 	}
 	
 	public static byte[] readPrivateKey() throws Exception {
 		KeyStore store = KeyStore.getInstance("JKS");
-		InputStream in = new FileInputStream("C:/Users/WQH/https.crt");
+		InputStream in = new FileInputStream("C:/Users/WQH/https.keystore");
 		store.load(in,"wqhuser".toCharArray());
 		PrivateKey pk = (PrivateKey)store.getKey("wqhuser", "wqhuser".toCharArray());
 		return pk.getEncoded();
@@ -27,7 +27,7 @@ public class CertificateUtils {
 	
 	public static PrivateKey readPrivateKeys() throws Exception {
 		KeyStore store = KeyStore.getInstance("JKS");
-		InputStream in = new FileInputStream("C:/Users/WQH/https.crt");
+		InputStream in = new FileInputStream("C:/Users/WQH/https.keystore");
 		store.load(in,"wqhuser".toCharArray());
 		PrivateKey pk = (PrivateKey)store.getKey("wqhuser", "wqhuser".toCharArray());
 		return pk;
