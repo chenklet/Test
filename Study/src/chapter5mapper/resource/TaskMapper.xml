@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="chapter5mapper.mapper.TaskMapper" >
+	<select id="getTask" parameterType="long" resultType="chapter5mapper.vo.Task">
+		select id, title, context, note from t_task where id = #{id}
+	</select>
+</mapper>

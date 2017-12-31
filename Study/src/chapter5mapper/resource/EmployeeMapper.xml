@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="chapter5mapper.mapper.EmployeeMapper">
+	<resultMap type="chapter5mapper.vo.Employee" id="EmployeeMap">
+		<id column="id" property="id" />
+		<result column="real_name" property="realName" />
+		<result column="sex" property="sex" typeHandler="chapter5mapper.typeHandler.SexEnumTypeHandler"/>
+		<result column="birthday" property="birthday"/>
+		<result column="mobile" property="mobile"/>
+		<result column="email" property="email"/>
+		<result column="position" property="position"/>
+		<result column="note" property="note" />
+		<association property="workCard" column="id" select="chapter5mapper.mapper.WorkCardMapper.getWorkCardByEmpId" />
+		<collection property="employeeTaskList" column="id" select="chapter5mapper.mapper.EmployeeTaskMapper.getEmployeeTaskByEmpId" />
+		<discriminator javaType="long" column="sex">
+			<case value="1"	resultMap="maleHealthFormMapper" />
+			<case value="2" resultMap="femaleHealthFormMapper" />
+		</discriminator>
+	</resultMap>
+	
+	<resultMap type="chapter5mapper.vo.MaleEmployee" id="maleHealthFormMapper" extends="EmployeeMap">
+		<association property="maleHealthForm" column="id" select="chapter5mapper.mapper.MaleHealthFormMapper.getMaleHealthForm" />
+	</resultMap>
+	
+	<resultMap type="chapter5mapper.vo.FemaleEmployee" id="femaleHealthFormMapper" extends="EmployeeMap">
+		<association property="femaleHealthForm" column="id" select="chapter5mapper.mapper.FemaleHealthFormMapper.getFemaleHealthForm" />
+	</resultMap>
+	
+	<select id="getEmployee" parameterType="long" resultMap="EmployeeMap">
+		select id, real_name as realName, sex, birthday, mobile, email, position, note from t_employee where id = #{id}
+	</select>
+</mapper>
