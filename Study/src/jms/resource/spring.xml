@@ -24,5 +24,9 @@
     	<property name="connectionFactory" ref="connectionFactory"/>
     	<property name="defaultDestinationName" value="spittle.alert.queue" />
     </bean>
+    
+    <jms:listener-container connection-factory="connectionFactory">
+    	<jms:listener destination="spittle.queue" ref="springJMSConsumer2" method="processMessage"/>
+    </jms:listener-container>
     <!-- <amq:queue id="queue" physicalName="spitter.queue" /> -->
 </beans>
